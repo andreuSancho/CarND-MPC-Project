@@ -10,7 +10,7 @@ Kinematic models and control systems are crucial for the autonomous vehicle in o
 ## Kinematic model
 The model used is the so-called bicycle kinematic model, which considers (1) the position of the vehicle (x and y coordinates), (2) the orientation (psi), and (3) its velocity (v).  Also, the model considers two actuators: (1) the steering wheel (delta), and (2) the throttle pedal (a). Note that the throttle pedal is used for both braking (negative values) and for accelerating (positive values). The model uses the below equations.
 
-![Figure 1: Kinematic model. Image taken from the course.](https://github.com/andreuSancho/CarND-MPC-Project/blob/master/equations.png)
+![Figure 1: Kinematic model. Image taken from the course.](https://github.com/andreuSancho/CarND-MPC-Project/blob/master/equationsLarge.png)
 
 The above equations have been taken from the course.
 
