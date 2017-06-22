@@ -9,14 +9,17 @@ Kinematic models and control systems are crucial for the autonomous vehicle in o
 
 ## Kinematic model
 The model used is the so-called bicycle kinematic model, which considers (1) the position of the vehicle (x and y coordinates), (2) the orientation (psi), and (3) its velocity (v).  Also, the model considers two actuators: (1) the steering wheel (delta), and (2) the throttle pedal (a). Note that the throttle pedal is used for both braking (negative values) and for accelerating (positive values). The model uses the below equations.
+
 ![Figure 1: Kinematic model. Image taken from the course.](https://github.com/andreuSancho/CarND-MPC-Project/blob/master/equations.png)
 
 The above equations have been taken from the course.
 
 ## Length of the trajectory (N) and elapsed duration (dt)
 The first step in the process is to define the length of the trajectory (N) and the elapsed duration of each time step (dt) hyperparameters. These have been found empirically and are set as follows:
+
 -	N = 11
 -	dt = 0.1
+
 These values are defined in the `constants.h`, lines `6` and `7`.  The prediction horizon is, therefore, 1.1 seconds. Other values were explored in a grid search-alike way: `(10, 0.1)`, `(15, 0.1)`, `(17, 0.1)`, `(18, 0.1)`, `(19, 0.1)`, `(20, 0.1)`, `(30, 0.1)`, `(20, 0.05)`, and `(30, 0.05)`. However, some of these produced oscillations in the trajectory and have been considered unsafe.
 
 ## Polynomial Fitting and MPC Preprocessing
