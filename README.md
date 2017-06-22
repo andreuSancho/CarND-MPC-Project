@@ -3,6 +3,42 @@ Self-Driving Car Engineer Nanodegree Program
 
 ---
 
+## Introduction
+
+Kinematic models and control systems are crucial for the autonomous vehicle in order to safely navigate through a lane. The purpose of this project is to improve the previous PID controller by designing and implementing a Model Predictive Controller (MPC) that guides the car in a simulator. The vehicle physics have been modelled using the so-called bicycle kinematic model, which is non-linear but simple enough. The simulation has been programed in C++.
+
+## Kinematic model
+The model used is the so-called bicycle kinematic model, which considers (1) the position of the vehicle (x and y coordinates), (2) the orientation (psi), and (3) its velocity (v).  Also, the model considers two actuators: (1) the steering wheel (delta), and (2) the throttle pedal (a). Note that the throttle pedal is used for both braking (negative values) and for accelerating (positive values). The model uses the below equations.
+![Figure 1: Kinematic model. Image taken from the course.](https://github.com/andreuSancho/)
+The above equations have been taken from the course.
+
+## Length of the trajectory (N) and elapsed duration (dt)
+The first step in the process is to define the length of the trajectory (N) and the elapsed duration of each time step (dt) hyperparameters. These have been found empirically and are set as follows:
+-	N = 11
+-	dt = 0.1
+These values are defined in the `constants.h`, lines `6` and `7`.  The prediction horizon is, therefore, 1.1 seconds. Other values were explored in a grid search-alike way: `(10, 0.1)`, `(15, 0.1)`, `(17, 0.1)`, `(18, 0.1)`, `(19, 0.1)`, `(20, 0.1)`, `(30, 0.1)`, `(20, 0.05)`, and `(30, 0.05)`. However, some of these produced oscillations in the trajectory and have been considered unsafe.
+
+## Polynomial Fitting and MPC Preprocessing
+As recommended by the instructors, provided waypoints are preprocessed by transforming them into vehicle coordinates. The transformation is nothing more than a translation and a rotation. This way the state vector to be passed to the solver has x, y and psi parameters set to zero, requiring much less computations during the fitting (see lines `103` to `120` in the file `main.cpp`).
+
+## Latency
+A complex part, but critical for successfully driving the car with the MPC, is to take the latency into the model. For doing so, three distinct aspects where used: (1) adding a `sleep` command of 100ms just before submitting the new commands to the simulator (see line `159` in the file `main.cpp`), (2) taking the actuators from a delayed time step (see lines `82` to `85` in the file `MPC.cpp`, and (3) adding an extra penalty in the cost function, which penalizes the sum of the velocity and steering wheel angle (see line `48` in the file `MPC.cpp`). 
+
+Note that the last to solutions where strongly inspired by the work of Jeremy Shannon (https://github.com/jeremy-shannon).
+
+## Result
+
+Video of the car controller driving in the training (click to play).
+[![MPC controller in action](https://img.youtube.com/vi/cPGv7XdXPpI/0.jpg)](https://youtu.be/cPGv7XdXPpI)
+
+## Note on using the code in Windows.
+
+Windows users have to do a bridge between the Virtual Machine (VM) with Linux and the Windows Host. To do so, open the console as administrator and type the following:
+
+`netsh interface portproxy add v4tov4 listenport=4567 listenaddress=127.0.0.1 connectport=4567 connectaddress=<LINUX_IP> protocol=tcp`
+
+where *<LINUX_IP>* is the IP address of the Linux VM machine.
+
 ## Dependencies
 
 * cmake >= 3.5
