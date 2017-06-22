@@ -28,7 +28,7 @@ As recommended by the instructors, provided waypoints are preprocessed by transf
 ## Latency
 A complex part, but critical for successfully driving the car with the MPC, is to take the latency into the model. For doing so, three distinct aspects where used: (1) adding a `sleep` command of 100ms just before submitting the new commands to the simulator (see line `159` in the file `main.cpp`), (2) taking the actuators from a delayed time step (see lines `82` to `85` in the file `MPC.cpp`, and (3) adding an extra penalty in the cost function, which penalizes the sum of the velocity and steering wheel angle (see line `48` in the file `MPC.cpp`). Also, the speed has been limited to 80 mph (see line `19` of the file `constants.h`).
 
-Note that the last to solutions were strongly inspired by the work of Jeremy Shannon (https://github.com/jeremy-shannon).
+Note that the last two solutions were strongly inspired by the work of Jeremy Shannon (https://github.com/jeremy-shannon).
 
 ## Result
 
